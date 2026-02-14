@@ -40,3 +40,5 @@ secrets.toml
 
 *.log
 
+.env
+*.env
