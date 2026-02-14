@@ -1,14 +1,17 @@
 import pandas as pd
 from sqlalchemy import create_engine
+import os
 import mysql.connector
 
 def load_data_to_mysql(csv_path, db_config, table_name='loans', chunksize=10000):
     print("Creating database connection...")
 
-    engine = create_engine(
-        f"mysql+pymysql://{db_config['user']}:{db_config['password']}@"
-        f"{db_config['host']}/{db_config['database']}"
-    )
+    db_host = os.getenv('MYSQL_HOST', 'localhost')
+    db_user = os.getenv('MYSQL_USER', 'root')
+    db_password = os.getenv('MYSQL_PASSWORD', '')
+    db_name = os.getenv('MYSQL_DATABASE', 'credit_risk_db')
+
+    engine = create_engine(f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}")
 
     print(f"Loading data from {csv_path}...")
 
@@ -48,15 +51,4 @@ def load_data_to_mysql(csv_path, db_config, table_name='loans', chunksize=10000)
     engine.dispose()
 
 if __name__ == "__main__":
-    db_config = {
-        'host': 'localhost',
-        'user': 'root',
-        'password': 'Subaruforester_1',
-        'database': 'credit_risk_db'
-    }
-
-    load_data_to_mysql(
-        csv_path = '../data/processed/lending_club_clean.csv',
-        db_config=db_config,
-        table_name='loans'
-    )
+    load_data_to_mysql(csv_path = '../data/processed/lending_club_clean.csv', table_name='loans')
