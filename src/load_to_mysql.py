@@ -2,6 +2,9 @@ import pandas as pd
 from sqlalchemy import create_engine
 import os
 import mysql.connector
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def load_data_to_mysql(csv_path, db_config, table_name='loans', chunksize=10000):
     print("Creating database connection...")
