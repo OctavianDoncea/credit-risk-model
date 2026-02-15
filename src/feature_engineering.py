@@ -95,7 +95,7 @@ if __name__ == "__main__":
     df = pd.read_sql("SELECT * FROM loans LIMIT 50000", engine)
     df_enhanced = create_advanced_features(df)
     df_model = prepare_modelling_data(df)
-    df_model.to_csv("../data/processed.modelling_data.csv", index=False)
+    df_model.to_csv("../data/processed/modelling_data.csv", index=False)
 
     print(f"\nFeature engineering complete!")
     print("\n== TOP FEATURES BY CORRELATION WITH DEFAULT ==")
